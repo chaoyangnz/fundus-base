@@ -26,7 +26,7 @@ import java.util.Comparator;
  * as unsigned are found in {@link UnsignedBytes}, and the methods for which
  * signedness is not an issue are in {@link Bytes}.
  *
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public final class SignedBytes {
   private SignedBytes() {}

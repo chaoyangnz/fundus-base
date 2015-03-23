@@ -20,7 +20,7 @@ package org.inframesh.fundus.base.text;
  * @since fundus
  * @version
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  */ 
 public class Patterns {
 	

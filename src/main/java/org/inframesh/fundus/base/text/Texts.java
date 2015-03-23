@@ -23,7 +23,7 @@ import java.util.Formatter;
  * Static utility methods pertaining to {@code String} or {@code CharSequence} or {@code char}
  * instances.
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public final class Texts {
 	private Texts() {

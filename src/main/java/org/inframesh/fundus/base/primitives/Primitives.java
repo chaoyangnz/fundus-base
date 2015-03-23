@@ -26,7 +26,7 @@ import java.util.Set;
  * Contains static utility methods pertaining to primitive types and their
  * corresponding wrapper types.
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public final class Primitives {
 	private Primitives() {

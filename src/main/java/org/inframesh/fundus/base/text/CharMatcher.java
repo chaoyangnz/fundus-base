@@ -40,7 +40,7 @@ import java.util.List;
  * using surrogate pairs, and a {@code CharMatcher} treats these just as two
  * separate characters.
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public abstract class CharMatcher implements Matcher<Character> {
 	// Constants

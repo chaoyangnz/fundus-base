@@ -22,7 +22,7 @@ import java.util.Map;
  * This class provides default values for all Java types, as defined by the Jave
  * Language Specification.
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  */
 public final class Defaults {
 	private Defaults() {

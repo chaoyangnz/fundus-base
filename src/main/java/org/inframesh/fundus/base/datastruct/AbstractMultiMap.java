@@ -48,7 +48,7 @@ import java.util.TreeMap;
  * @since fundus
  * @version $Revision: 1.0 $Date:2010-2-25 下午03:24:25 $
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  */
 @SuppressWarnings("unchecked")
 public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {

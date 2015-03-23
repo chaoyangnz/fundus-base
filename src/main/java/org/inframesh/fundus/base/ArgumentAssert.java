@@ -29,7 +29,7 @@ import org.inframesh.fundus.base.text.Texts;
  * @since fundus
  * @version $Revision: 1.15 $Date:2010-1-26 07:42:51 $
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  */
 public final class ArgumentAssert {
 

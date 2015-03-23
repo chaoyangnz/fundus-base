@@ -19,7 +19,7 @@ package org.inframesh.fundus.base.text;
 /**
  * Utility class for converting between various ASCII case formats.
  *
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public enum NameConvention {
 	

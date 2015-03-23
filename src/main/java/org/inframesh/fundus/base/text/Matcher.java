@@ -24,7 +24,7 @@ package org.inframesh.fundus.base.text;
  * <p>Implementations which may cause side effects upon evaluation are strongly
  * encouraged to state this fact clearly in their API documentation.
  *
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public interface Matcher<T> {
 

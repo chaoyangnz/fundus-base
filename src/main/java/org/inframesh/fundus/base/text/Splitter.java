@@ -92,7 +92,7 @@ import java.util.regex.Pattern;
  * using five particular whitespace characters as separators, like
  * {@link java.util.StringTokenizer}.
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  **/
 public final class Splitter {
 	private final CharMatcher trimmer;

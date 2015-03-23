@@ -22,7 +22,7 @@ package org.inframesh.fundus.util;
  * @since fundus
  * @version $Revision: 1.0 $Date:2010-2-8 上午10:17:24 $
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  */ 
 public final class StackTracer {
 	

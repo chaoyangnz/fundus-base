@@ -41,7 +41,7 @@ import java.util.TreeSet;
  * @since fundus
  * @version $Revision: 1.0 $Date:2010-2-25 下午03:24:25 $
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  */ 
 public class TreeMultiMap<K, V> extends AbstractMultiMap<K, V> {
 

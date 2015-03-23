@@ -27,7 +27,7 @@ import static org.inframesh.fundus.base.ArgumentAssert.notNull;
  * the values as signed are found in {@link SignedBytes}, and the methods for
  * which signedness is not an issue are in {@link Bytes}.
  *
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public final class UnsignedBytes {
   private UnsignedBytes() {}

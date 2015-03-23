@@ -30,7 +30,7 @@ import sun.reflect.generics.repository.MethodRepository;
  * @since fundus
  * @version $Revision: 1.0 $Date:2010-2-24 下午05:16:24 $
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  */ 
 @SuppressWarnings("restriction")
 public final class Generics {

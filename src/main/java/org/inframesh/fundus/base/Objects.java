@@ -34,7 +34,7 @@ import org.inframesh.fundus.base.text.Joiner;
 /**
  * Helper functions that can operate on any {@code Object}.
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public final class Objects {
 	private Objects() {
@@ -223,7 +223,7 @@ public final class Objects {
 	/**
 	 * Support class for {@link Objects#toStringHelper}.
 	 * 
-	 * @author <a hre<a href="mailto:josh.yoah@gmail.com">杨超</a>fundus
+	 * @author <a hre<a href="mailto:richd.yang@gmail.com">Richard Yang</a>fundus
 	 */
 	public final static class ToStringHelper {
 		private final List<String> fieldString = new ArrayList<String>();

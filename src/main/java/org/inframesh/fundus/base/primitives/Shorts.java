@@ -35,7 +35,7 @@ import org.inframesh.fundus.base.Objects.HashCodeHelper;
  * Static utility methods pertaining to {@code short} primitives, that are not
  * already found in either {@link Short} or {@link Arrays}.
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public final class Shorts {
 	private Shorts() {

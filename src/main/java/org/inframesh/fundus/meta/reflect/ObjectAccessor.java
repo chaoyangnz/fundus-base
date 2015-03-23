@@ -36,7 +36,7 @@ import org.inframesh.fundus.meta.ExpressionHelper.Segment;
  * @since fundus
  * @version 
  *
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
  */ 
 public class ObjectAccessor {
 	

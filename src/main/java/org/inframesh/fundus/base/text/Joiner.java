@@ -63,7 +63,7 @@ import java.util.Map.Entry;
  *   return joiner.join("wrong", null, "wrong");}
  * </pre>
  * 
- * @author <a href="mailto:josh.yoah@gmail.com">杨超</a>ince fundus
+ * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>ince fundus
  */
 public class Joiner {
 	
