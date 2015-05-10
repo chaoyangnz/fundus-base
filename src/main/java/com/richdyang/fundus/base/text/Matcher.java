@@ -1,18 +1,3 @@
-/* 
- *  Copyright (c)2009-2010 The Inframesh Software Foundation (ISF)
- *
- *  Licensed under the Inframesh Software License (the "License"), 
- *	Version 1.0 ; you may obtain a copy of the license at
- *
- *  	http://www.inframesh.org/licenses/LICENSE-1.0
- *
- *  Software distributed under the License is distributed  on an "AS IS" 
- *  BASIS but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the License 
- *  for more details.
- *  
- *  Inframesh Software Foundation is donated by Drowell Technology Limited.
- */
 package com.richdyang.fundus.base.text;
 
 
@@ -20,7 +5,7 @@ package com.richdyang.fundus.base.text;
  * Determines a true or false value for a given input. For example, a
  * {@code RegexPredicate} might implement {@code Predicate<String>}, and return
  * {@code true} for any string that matches its given regular expression.
- *
+ * <p>
  * <p>Implementations which may cause side effects upon evaluation are strongly
  * encouraged to state this fact clearly in their API documentation.
  *
@@ -49,7 +34,7 @@ public interface Matcher<T> {
    * implies that either {@code predicate1.apply(input)} and
    * {@code predicate2.apply(input)} are both {@code true} or both
    * {@code false}.
-   *
+   * <p>
    * <p>Note that it is always safe <i>not</i> to override
    * {@link Object#equals}.
    */

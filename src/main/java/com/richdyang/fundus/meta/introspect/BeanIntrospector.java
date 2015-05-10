@@ -1,18 +1,3 @@
-/* 
- *  Copyright (c)2009-2010 The Inframesh Software Foundation (ISF)
- *
- *  Licensed under the Inframesh Software License (the "License"), 
- *	Version 1.0 ; you may obtain a copy of the license at
- *
- *  	http://www.inframesh.org/licenses/LICENSE-1.0
- *
- *  Software distributed under the License is distributed  on an "AS IS" 
- *  BASIS but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the License 
- *  for more details.
- *  
- *  Inframesh Software Foundation is donated by Drowell Technology Limited.
- */
 package com.richdyang.fundus.meta.introspect;
 
 import java.beans.BeanInfo;
@@ -29,164 +14,165 @@ import java.util.Set;
 
 import com.richdyang.fundus.base.datastruct.LRUMap;
 
+import static java.beans.Introspector.getBeanInfo;
+import static java.util.Collections.synchronizedMap;
+
 /**
  * Bean information for <code>Class</code> and cached support provided
- * 
- * @since fundus
- * @version
- * @see BeanAccessor
- * 
+ *
  * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
+ * @see BeanAccessor
+ * @since fundus
  */
 public class BeanIntrospector<T> {
-	/*------------------For cached descriptor-------------------*/
-	private static Map<Class, BeanIntrospector> INSTANCES = Collections.synchronizedMap(new LRUMap(40));// cached
+    /*------------------For cached descriptor-------------------*/
+    private static Map<Class, BeanIntrospector> INSTANCES = synchronizedMap(new LRUMap(40));// cached
 
-	public static <T> BeanIntrospector<T> forClass(Class<T> clazz) {
-		BeanIntrospector classIntrospector = INSTANCES.get(clazz);
-		if (classIntrospector == null) {
-			classIntrospector = new BeanIntrospector(clazz);
-			INSTANCES.put(clazz, classIntrospector);
-		}
-		return classIntrospector;
-	}
+    public static <T> BeanIntrospector<T> forClass(Class<T> clazz) {
+        BeanIntrospector classIntrospector = INSTANCES.get(clazz);
+        if (classIntrospector == null) {
+            classIntrospector = new BeanIntrospector(clazz);
+            INSTANCES.put(clazz, classIntrospector);
+        }
+        return classIntrospector;
+    }
 
 	/*----------------------------------------------------------*/
 
-	private Class<T> clazz;
-	private boolean resolved = false;
+    private Class<T> clazz;
+    private boolean resolved = false;
 
-	/*--------------Bean Inspector-----------------------------*/
-	private BeanInfo beanInfo;
-	private Map<String, PropertyDescriptor> propertyDescriptors;
-	private Map<String, PropertyDescriptor> readablePropertyDescriptors;
-	private Map<String, PropertyDescriptor> writablePropertyDescriptors;
+    /*--------------Bean Inspector-----------------------------*/
+    private BeanInfo beanInfo;
+    private Map<String, PropertyDescriptor> propertyDescriptors;
+    private Map<String, PropertyDescriptor> readablePropertyDescriptors;
+    private Map<String, PropertyDescriptor> writablePropertyDescriptors;
 
-	private Map<String, MethodDescriptor> methodDescriptors;
+    private Map<String, MethodDescriptor> methodDescriptors;
 
-	private BeanIntrospector(Class clazz) {
-		this.clazz = clazz;
-		this.propertyDescriptors = new LinkedHashMap<String, PropertyDescriptor>();
-		this.readablePropertyDescriptors = new LinkedHashMap<String, PropertyDescriptor>();
-		this.writablePropertyDescriptors = new LinkedHashMap<String, PropertyDescriptor>();
+    private BeanIntrospector(Class clazz) {
+        this.clazz = clazz;
+        this.propertyDescriptors = new LinkedHashMap<String, PropertyDescriptor>();
+        this.readablePropertyDescriptors = new LinkedHashMap<String, PropertyDescriptor>();
+        this.writablePropertyDescriptors = new LinkedHashMap<String, PropertyDescriptor>();
 
-		this.methodDescriptors = new LinkedHashMap<String, MethodDescriptor>();
+        this.methodDescriptors = new LinkedHashMap<String, MethodDescriptor>();
 
-		resolve();
-	}
+        resolve();
+    }
 
-	private void resolve() {
-		if (!resolved) {
+    private void resolve() {
+        if (!resolved) {
 
-			try {
-				beanInfo = Introspector.getBeanInfo(clazz);
-			} catch (IntrospectionException e) {
-				// e.printStackTrace();
-			}
+            try {
+                beanInfo = getBeanInfo(clazz);
+            } catch (IntrospectionException e) {
+                // e.printStackTrace();
+            }
 
-			PropertyDescriptor[] propertyDescriptorArray = beanInfo.getPropertyDescriptors();
-			for (PropertyDescriptor propertyDescriptor : propertyDescriptorArray) {
-				String name = propertyDescriptor.getName();
-				propertyDescriptors.put(name, propertyDescriptor);
+            PropertyDescriptor[] propertyDescriptorArray = beanInfo.getPropertyDescriptors();
+            for (PropertyDescriptor propertyDescriptor : propertyDescriptorArray) {
+                String name = propertyDescriptor.getName();
+                propertyDescriptors.put(name, propertyDescriptor);
 
-				Method getter = propertyDescriptor.getReadMethod();
-				if (getter != null) {
-					readablePropertyDescriptors.put(name, propertyDescriptor);
-				}
+                Method getter = propertyDescriptor.getReadMethod();
+                if (getter != null) {
+                    readablePropertyDescriptors.put(name, propertyDescriptor);
+                }
 
-				Method setter = propertyDescriptor.getWriteMethod();
-				if (setter != null) {
-					writablePropertyDescriptors.put(name, propertyDescriptor);
-				}
-			}
+                Method setter = propertyDescriptor.getWriteMethod();
+                if (setter != null) {
+                    writablePropertyDescriptors.put(name, propertyDescriptor);
+                }
+            }
 
-			MethodDescriptor[] methodDescriptorArray = beanInfo.getMethodDescriptors();
-			for (MethodDescriptor methodDescriptor : methodDescriptorArray) {
-				methodDescriptors.put(methodDescriptor.getName(), methodDescriptor);
-			}
+            MethodDescriptor[] methodDescriptorArray = beanInfo.getMethodDescriptors();
+            for (MethodDescriptor methodDescriptor : methodDescriptorArray) {
+                methodDescriptors.put(methodDescriptor.getName(), methodDescriptor);
+            }
 
-			resolved = true;
-		}
-	}
+            resolved = true;
+        }
+    }
 
-	public Class<T> getTargetClass() {
-		return clazz;
-	}
+    public Class<T> getTargetClass() {
+        return clazz;
+    }
 
-	public Map<String, PropertyDescriptor> getPropertyDescriptors() {
-		return propertyDescriptors;
-	}
+    public Map<String, PropertyDescriptor> getPropertyDescriptors() {
+        return propertyDescriptors;
+    }
 
-	public Map<String, MethodDescriptor> getMethodDescriptors() {
-		return methodDescriptors;
-	}
+    public Map<String, MethodDescriptor> getMethodDescriptors() {
+        return methodDescriptors;
+    }
 
-	public String[] getPropertyNames() {
-		Set<String> keyset = propertyDescriptors.keySet();
-		keyset.remove("class");// exclude "class"
+    public String[] getPropertyNames() {
+        Set<String> keyset = propertyDescriptors.keySet();
+        keyset.remove("class");// exclude "class"
 
-		return keyset.toArray(new String[keyset.size()]);
-	}
+        return keyset.toArray(new String[keyset.size()]);
+    }
 
-	public String[] getWritablePropertyNames() {
-		Set<String> keyset = writablePropertyDescriptors.keySet();
+    public String[] getWritablePropertyNames() {
+        Set<String> keyset = writablePropertyDescriptors.keySet();
 
-		return keyset.toArray(new String[keyset.size()]);
-	}
+        return keyset.toArray(new String[keyset.size()]);
+    }
 
-	public String[] getReadablePropertyNames() {
-		Set<String> keyset = readablePropertyDescriptors.keySet();
+    public String[] getReadablePropertyNames() {
+        Set<String> keyset = readablePropertyDescriptors.keySet();
 
-		return keyset.toArray(new String[keyset.size()]);
-	}
+        return keyset.toArray(new String[keyset.size()]);
+    }
 
-	public Method getGetterMethod(String propertyName) {
+    public Method getGetterMethod(String propertyName) {
 
-		PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
-		if (propertyDescriptor == null) {
-			return null;
-		}
+        PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
+        if (propertyDescriptor == null) {
+            return null;
+        }
 
-		return propertyDescriptor.getReadMethod();
-	}
+        return propertyDescriptor.getReadMethod();
+    }
 
-	public Method getSetterMethod(String propertyName) {
+    public Method getSetterMethod(String propertyName) {
 
-		PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
-		if (propertyDescriptor == null) {
-			return null;
-		}
+        PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
+        if (propertyDescriptor == null) {
+            return null;
+        }
 
-		return propertyDescriptor.getWriteMethod();
-	}
+        return propertyDescriptor.getWriteMethod();
+    }
 
-	public PropertyDescriptor getPropertyDescriptor(String propertyName) {
-		return propertyDescriptors.get(propertyName);
-	}
+    public PropertyDescriptor getPropertyDescriptor(String propertyName) {
+        return propertyDescriptors.get(propertyName);
+    }
 
-	/**
-	 * 递归查找所有类层次的field
-	 * 
-	 * @param propertyName
-	 * @return null if not found
-	 */
-	public Field getPropertyField(String propertyName) {
-		return getFieldRecursively(clazz, propertyName);
-	}
+    /**
+     * 递归查找所有类层次的field
+     *
+     * @param propertyName
+     * @return null if not found
+     */
+    public Field getPropertyField(String propertyName) {
+        return getFieldRecursively(clazz, propertyName);
+    }
 
-	private static Field getFieldRecursively(Class<?> clazz, String fieldName) {
-		try {
-			return clazz.getDeclaredField(fieldName);
-		} catch (NoSuchFieldException e) {
-			try {
-				return clazz.getField(fieldName);
-			} catch (NoSuchFieldException e1) {
-				return getFieldRecursively(clazz.getSuperclass(), fieldName);
-			} catch(Exception e2) {
-				return null;
-			}
-		} catch(Exception ex) {
-			return null;
-		}
-	}
+    private static Field getFieldRecursively(Class<?> clazz, String fieldName) {
+        try {
+            return clazz.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException e) {
+            try {
+                return clazz.getField(fieldName);
+            } catch (NoSuchFieldException e1) {
+                return getFieldRecursively(clazz.getSuperclass(), fieldName);
+            } catch (Exception e2) {
+                return null;
+            }
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 }

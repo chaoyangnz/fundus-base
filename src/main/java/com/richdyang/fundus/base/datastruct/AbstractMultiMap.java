@@ -1,18 +1,3 @@
-/* 
- *  Copyright (c)2009-2010 The Inframesh Software Foundation (ISF)
- *
- *  Licensed under the Inframesh Software License (the "License"), 
- *	Version 1.0 ; you may obtain a copy of the license at
- *
- *  	http://www.inframesh.org/licenses/LICENSE-1.0
- *
- *  Software distributed under the License is distributed  on an "AS IS" 
- *  BASIS but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the License 
- *  for more details.
- *  
- *  Inframesh Software Foundation is donated by Drowell Technology Limited.
- */
 package com.richdyang.fundus.base.datastruct;
 
 import java.io.Serializable;
@@ -27,10 +12,14 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeMap;
 
+import static com.richdyang.fundus.base.datastruct.MultiMap.Entry;
+import static java.lang.System.err;
+import static java.util.Collections.unmodifiableSet;
+
 /**
  * A multi-map implementation which combines existing {@link Map} and
  * {@link Set} implementations.
- * 
+ * <p>
  * <p align="center">
  * <table cellpadding=4 cellspacing=2 border=0 bgcolor="#338833" width="90%">
  * <tr>
@@ -44,11 +33,10 @@ import java.util.TreeMap;
  * functionality.</td>
  * </tr>
  * </table>
- * 
- * @since fundus
- * @version $Revision: 1.0 $Date:2010-2-25 下午03:24:25 $
- * 
+ *
  * @author <a href="mailto:richd.yang@gmail.com">Richard Yang</a>
+ * @version $Revision: 1.0 $Date:2010-2-25 下午03:24:25 $
+ * @since fundus
  */
 @SuppressWarnings("unchecked")
 public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
@@ -57,11 +45,9 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 
 	/**
 	 * Creates a new empty composite multi-map.
-	 * 
-	 * @param mapClass
-	 *            A class implementing {@link Map} with a no-args constructor.
-	 * @param setClass
-	 *            A class implementing {@link Set} with a no-args constructor.
+	 *
+	 * @param mapClass A class implementing {@link Map} with a no-args constructor.
+	 * @param setClass A class implementing {@link Set} with a no-args constructor.
 	 */
 	public AbstractMultiMap(Class<? extends Map> mapClass, Class<? extends Set> setClass) {
 		if (!Map.class.isAssignableFrom(mapClass))
@@ -72,7 +58,7 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 		try {
 			map = mapClass.newInstance();
 		} catch (Exception e) {
-			e.printStackTrace(System.err);
+			e.printStackTrace(err);
 			throw new RuntimeException("Can't instantiate " + setClass + ": " + e);
 		}
 		this.setFactory = new ConstructorFactory<Set<V>>((Class<? extends Set<V>>) setClass);
@@ -81,13 +67,10 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 	/**
 	 * Creates a new composite multi-map which is a shallow copy of an existing
 	 * multi-map.
-	 * 
-	 * @param mapClass
-	 *            A class implementing {@link Map} with a no-args constructor.
-	 * @param setClass
-	 *            A class implementing {@link Set} with a no-args constructor.
-	 * @param multimap
-	 *            The intial key/value mappings for this multimap.
+	 *
+	 * @param mapClass A class implementing {@link Map} with a no-args constructor.
+	 * @param setClass A class implementing {@link Set} with a no-args constructor.
+	 * @param multimap The intial key/value mappings for this multimap.
 	 */
 	public AbstractMultiMap(Class<? extends Map> mapClass, Class<? extends Set> setClass, MultiMap<? extends K, ? extends V> multimap) {
 		this(mapClass, setClass);
@@ -97,13 +80,10 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 	/**
 	 * Creates a new composite multi-map which is a shallow copy of an existing
 	 * map.
-	 * 
-	 * @param mapClass
-	 *            A class implementing {@link Map} with a no-args constructor.
-	 * @param setClass
-	 *            A class implementing {@link Set} with a no-args constructor.
-	 * @param map
-	 *            The intial key/value mappings for this multimap.
+	 *
+	 * @param mapClass A class implementing {@link Map} with a no-args constructor.
+	 * @param setClass A class implementing {@link Set} with a no-args constructor.
+	 * @param map      The intial key/value mappings for this multimap.
 	 */
 	public AbstractMultiMap(Class<? extends Map> mapClass, Class<? extends Set> setClass, Map<? extends K, ? extends V> map) {
 		this(mapClass, setClass);
@@ -141,7 +121,7 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 
 	public Set<V> get(K key) {
 		Set<V> values = map.get(key);
-		return values == null ? null : Collections.unmodifiableSet(values);
+		return values == null ? null : unmodifiableSet(values);
 	}
 
 	public boolean put(K key, V value) {
@@ -183,7 +163,7 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 
 	public void putAll(MultiMap<? extends K, ? extends V> multimap) {
 		MultiMap multimapErasure = multimap; // ! cheat -- is there a better
-												// way?
+		// way?
 		for (K key : multimap.keySet())
 			putAll(key, multimapErasure.get(key));
 	}
@@ -205,7 +185,7 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 	public Collection<V> values() {
 		if (values == null)
 			values = new AbstractCollection<V>() {
-				public java.util.Iterator<V> iterator() {
+				public Iterator<V> iterator() {
 					return new ValueIterator();
 				}
 
@@ -220,10 +200,10 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 		return values;
 	}
 
-	public Set<MultiMap.Entry<K, V>> entrySet() {
+	public Set<Entry<K, V>> entrySet() {
 		if (entries == null)
-			entries = new AbstractSet<MultiMap.Entry<K, V>>() {
-				public Iterator<MultiMap.Entry<K, V>> iterator() {
+			entries = new AbstractSet<Entry<K, V>>() {
+				public Iterator<Entry<K, V>> iterator() {
 					return new EntryIterator();
 				}
 
@@ -232,9 +212,9 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 				}
 
 				public boolean remove(Object obj) {
-					if (!(obj instanceof MultiMap.Entry))
+					if (!(obj instanceof Entry))
 						return false;
-					MultiMap.Entry<K, V> entry = (MultiMap.Entry<K, V>) obj;
+					Entry<K, V> entry = (Entry<K, V>) obj;
 					return AbstractMultiMap.this.remove(entry.getKey(), entry.getValue());
 				}
 
@@ -301,7 +281,7 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 		return valueSet;
 	}
 
-	private abstract class IteratorBase<T> implements java.util.Iterator<T> {
+	private abstract class IteratorBase<T> implements Iterator<T> {
 		public IteratorBase() {
 			expectedVersion = version;
 			keyEntryIter = map.entrySet().iterator();
@@ -361,8 +341,8 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 		}
 	}
 
-	private class EntryIterator extends IteratorBase<MultiMap.Entry<K, V>> {
-		protected MultiMap.Entry<K, V> wrapNext(K key, V value) {
+	private class EntryIterator extends IteratorBase<Entry<K, V>> {
+		protected Entry<K, V> wrapNext(K key, V value) {
 			return new Entry<K, V>(key, value);
 		}
 	}
@@ -386,7 +366,7 @@ public class AbstractMultiMap<K, V> implements MultiMap<K, V>, Serializable {
 	private Factory<Set<V>> setFactory;
 	private int size;
 	private transient Collection<V> values;
-	private transient Set<MultiMap.Entry<K, V>> entries;
+	private transient Set<Entry<K, V>> entries;
 	private transient long version;
 
 	private static class ConstructorFactory<T> implements Factory<T>, Serializable {
